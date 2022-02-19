@@ -87,33 +87,23 @@ class SysPWM(object):
                 self.echo(self.__period_ns,path)
 
 if __name__ == "__main__":
-	from time import sleep
-	import atexit
-	SLEE=3
-	FREQ=20
-	# Tinkerkit
-	S=0.50
-	E=2.30
-	M=1.40
-	# Tower ProMG996R
-	#S=0.46
-	#E=2.54
-	#M=1.50
+        from time import sleep
+        import atexit
+        SLEE=3
+        FREQ=20
 
-	#pwm0 is GPIO pin 18 is physical pin 12
-	pwm = SysPWM(0)
-	pwm.set_frequency(FREQ)
-	pwm.set_duty_cycle(S)
-	atexit.register(pwm.disable)
-	pwm.enable()
+        #pwm0 is GPIO pin 18 is physical pin 12
+        pwm = SysPWM(0, FREQ)
+        atexit.register(pwm.disable)
+        pwm.enable()
 
-	while True:
-		pwm.set_duty_cycle(S)
-		print 0
-		sleep(SLEE)
-		pwm.set_duty_cycle(M)
-		print 90
-		sleep(SLEE)
-		pwm.set_duty_cycle(E)
-		print 180
-		sleep(SLEE)
+        while True:
+                pwm.set_duty_cycle(0.3)
+                print 0
+                sleep(SLEE)
+                pwm.set_duty_cycle(0.5)
+                print 90
+                sleep(SLEE)
+                pwm.set_duty_cycle(0.9)
+                print 180
+                sleep(SLEE)
