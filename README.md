@@ -18,7 +18,7 @@ Using it to, for example, control servo motors leads to very smooth control, whi
 
 Place `syspwm.py` in the same directory as your code, and include it like `from syspwm import SysPWM`
 
-The following code uses syspwm to  smoothly turn a servo through its turning radius. Tweak the duty cycle values of S, E, and M to cause your servo to go to its start, end, and middle positions, respectively.
+Abstract example
 ````python
         from time import sleep
         import atexit
