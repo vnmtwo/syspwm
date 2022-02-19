@@ -1,3 +1,6 @@
+# vnmtwo
+ - tested on Raspberry Pi 3 Model B V1.2 
+ - Raspbian 10 (buster) x64
 # syspwm
 Python Libary for Hardware PWM on Raspberry Pi using Linux kernel driver and /sys interface 
 
@@ -17,39 +20,25 @@ Place `syspwm.py` in the same directory as your code, and include it like `from 
 
 The following code uses syspwm to  smoothly turn a servo through its turning radius. Tweak the duty cycle values of S, E, and M to cause your servo to go to its start, end, and middle positions, respectively.
 ````python
-from syspwm import SysPWM
-from time   import sleep
-import sys,os
-import atexit
+        from time import sleep
+        import atexit
+        SLEE=3
+        FREQ=20
 
-SLEE=0.02
-PAUS=2
-FREQ=20
+        #pwm0 is GPIO pin 18 is physical pin 12
+        pwm = SysPWM(0, FREQ)
+        atexit.register(pwm.disable)
+        pwm.enable()
 
-S=0.65
-E=2.30
-M=1.40
-
-#pwm0 is GPIO pin 18 is physical pin 12
-pwm = SysPWM(0)
-pwm.set_frequency(FREQ)
-pwm.set_duty_cycle(S)
-atexit.register(pwm.disable)
-pwm.enable()
-sleep(PAUS)
-
-intS = int(S*100)
-intE = int(E*100)
-while True:
-        for i in range(intS,intE):
-                pwm.set_duty_cycle(i/100.0)
-                #print i-intS
+        while True:
+                pwm.set_duty_cycle(0.3)
+                print 0
                 sleep(SLEE)
-        sleep(PAUS)
-        for i in range(intE,intS,-1):
-                pwm.set_duty_cycle(i/100.0)
-                #print i-intS
+                pwm.set_duty_cycle(0.5)
+                print 90
                 sleep(SLEE)
-        sleep(PAUS)
+                pwm.set_duty_cycle(0.9)
+                print 180
+                sleep(SLEE)
 ````
 I learned the /sys interface for hardware PWM from http://www.jumpnowtek.com/rpi/Using-the-Raspberry-Pi-Hardware-PWM-timers.html
